@@ -1,4 +1,5 @@
 #!/bin/bash
+set -eu
 
 function usage()
 {
