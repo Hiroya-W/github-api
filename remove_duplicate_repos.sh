@@ -30,7 +30,7 @@ if [ -f $HASH_LIST_FILE ]; then
 fi
 
 # キーワードがヒットするファイルを検索
-rg $KEYWORD $TARGET_DIR -l | while read -r line; do
+rg $KEYWORD $TARGET_DIR -l | sort | while read -r line; do
     sha256sum "$line" >> $HASH_LIST_FILE
 done
 
