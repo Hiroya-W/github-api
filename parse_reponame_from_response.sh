@@ -15,7 +15,7 @@ if [ $# -ne 2 ]; then
 fi
 
 DIR=repo-lists
-DATE=`date '+%Y_%m_%d_%H_%M'`
+DATE=`date '+%Y_%m_%d_%H_%M_%S'`
 
 mkdir -p $DIR
 
