@@ -3,7 +3,7 @@ set -eu
 
 function usage()
 {
-    echo "キーワードで検索でヒットした中から、同じファイルを抽出しリスト化する"
+    echo "キーワードを含むファイルを検索し、ファイルの内容からハッシュ値を求める"
     echo ""
     echo "$0 \"KEYWORD\" TARGET_DIR"
 }
@@ -18,6 +18,7 @@ fi
 KEYWORD=$1
 TARGET_DIR=$2
 HASH_LIST_FILE=$TARGET_DIR/hash_list.txt
+HASH_LIST_SORT_FILE=$TARGET_DIR/hash_list_sort.txt
 HASH_LIST_DUP_FILE=$TARGET_DIR/hash_list_dup.txt
 
 if [ ! -d $TARGET_DIR ]; then
@@ -35,8 +36,5 @@ ls $TARGET_DIR/github.com | while read -r line; do
         sha1sum "$line2" | tee -a $HASH_LIST_FILE
     done
 done
-
-# 重複するものリストを作成
-cat $HASH_LIST_FILE | sort | awk 'colname[$1]++{print}' > $HASH_LIST_DUP_FILE
 
 exit 0
