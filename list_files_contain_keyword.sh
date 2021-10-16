@@ -32,7 +32,7 @@ fi
 
 # キーワードがヒットするファイルを検索
 ls $TARGET_DIR/github.com | while read -r line; do
-    rg "$KEYWORD" $TARGET_DIR/github.com/$line -l --ignore-case | while read -r line2; do
+    rg "$KEYWORD" "$TARGET_DIR/github.com/$line" -l --ignore-case | while read -r line2; do
         sha1sum "$line2" | tee -a $HASH_LIST_FILE
     done
 done
