@@ -21,10 +21,13 @@ cat "$HASH_LIST_DUP_FILE" | while read -r line; do
     # ファイル名を取得
     FILE_NAME=$(echo $line | awk '{print $2}')
     # ファイル名からディレクトリ名を取得
-    RM_DIR=$(echo $FILE_NAME | sed -r "s/ghq\/(.+\/github.com\/[^\/]+).*/\1/")
-    # ディレクトリを削除
-    echo "rm -r ghq/$RM_DIR"
-    rm -r ghq/$RM_DIR
+    RM_DIR=$(echo $FILE_NAME | sed -r "s/ghq\/(.+\/github.com\/[^\/]+\/[^\/]+).*/\1/")
+    # ディレクトリの存在を確認する
+    if [ -d "ghq/$RM_DIR" ]; then
+        echo "rm -r ghq/$RM_DIR"
+        # リポジトリが削除されるが、ユーザディレクトリは残る
+        rm -r "ghq/$RM_DIR"
+    fi
 done
 
 exit 0
