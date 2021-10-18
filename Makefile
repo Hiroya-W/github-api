@@ -14,4 +14,8 @@ format:
 .PHONY: check
 check: format lint
 
+.PHONY: jupyter
+jupyter:
+	poetry run jupyter lab
+
 .DEFAULT_GOAL := all
