@@ -5,6 +5,10 @@ import requests
 
 
 class SessionCore:
+    """
+    SessionCore is a singleton class.
+    """
+
     _has_instance = None
     _lock = Lock()
 

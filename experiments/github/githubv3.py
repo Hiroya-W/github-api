@@ -6,7 +6,19 @@ from requests.models import Response
 
 
 class GitHubV3(DefaultHttpClient):
+    """
+    GitHubV3 is a class that implements the client for the GitHub API v3.
+    """
+
     def __init__(self, token: str):
+        """
+        Initializes a new GitHubV3 object.
+
+        Parameters
+        ----------
+        token: str
+            The GitHub API token.
+        """
         super().__init__()
         self.__token = token
         self.__rest_url = "https://api.github.com"
@@ -22,6 +34,25 @@ class GitHubV3(DefaultHttpClient):
         page: Optional[int] = None,
         text_match: bool = False,
     ) -> Response:
+        """
+        Searches code with the given query.
+
+        Parameters
+        ----------
+        query: str
+            The query to search for.
+        per_page: int
+            The number of results per page.
+        page: int
+            The page number.
+        text_match: bool
+            Whether to search for text matches.
+
+        Returns
+        -------
+        Response
+            The response from the GitHub API.
+        """
         ENDPOINT = "/search/code"
         headers = self.__rest_headers
         params = _search_code_query_builder(query, per_page, page)
@@ -37,6 +68,23 @@ def _search_code_query_builder(
     per_page: Optional[int] = None,
     page: Optional[int] = None,
 ) -> str:
+    """
+    Builds the query for the search_code method.
+
+    Parameters
+    ----------
+    query: str
+        The query to search for.
+    per_page: int
+        The number of results per page.
+    page: int
+        The page number.
+
+    Returns
+    -------
+    str
+        The query.
+    """
     params = {"q": query}
     if per_page is not None:
         params["per_page"] = str(per_page)
