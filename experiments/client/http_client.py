@@ -17,7 +17,7 @@ class HttpClient(Protocol):
         self,
         url: str,
         data: Optional[Any] = None,
-        json: Any = None,
+        json: Optional[Any] = None,
         **kwargs: Optional[Any],
     ) -> Response:
         ...
