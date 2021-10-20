@@ -1,23 +1,20 @@
 import urllib.parse
 from typing import Optional
 
+from experiments.client import DefaultHttpClient
 from requests.models import Response
 
-from .session import SessionCore
 
+class GitHubV3(DefaultHttpClient):
+    def __init__(self, token: str):
+        super().__init__()
+        self.__token = token
+        self.__rest_url = "https://api.github.com"
+        self.__rest_headers = {
+            "Authorization": "Bearer {}".format(self.__token),
+            "Accept": "application/vnd.github.v3+json",
+        }
 
-class GitHubCore:
-    BASEURL = "https://api.github.com"
-
-    def __init__(self) -> None:
-        sc = SessionCore()
-        self._session = sc.session
-
-    def login(self, username: str, password: str) -> None:
-        self._session.auth = (username, password)
-
-
-class GitHub(GitHubCore):
     def search_code(
         self,
         query: str,
@@ -26,16 +23,13 @@ class GitHub(GitHubCore):
         text_match: bool = False,
     ) -> Response:
         ENDPOINT = "/search/code"
-        headers = {"Accept": "application/vnd.github.v3+json"}
-
+        headers = self.__rest_headers
         params = _search_code_query_builder(query, per_page, page)
 
         if text_match:
             headers["Accept"] = "application/vnd.github.v3.text-match+json"
 
-        return self._session.get(
-            self.BASEURL + ENDPOINT, params=params, headers=headers
-        )
+        return self.get(self.__rest_url + ENDPOINT, params=params, headers=headers)
 
 
 def _search_code_query_builder(
