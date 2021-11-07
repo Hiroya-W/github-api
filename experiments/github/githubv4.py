@@ -3,6 +3,19 @@ from requests.models import Response
 
 
 class GitHubV4(DefaultHttpClient):
+    """
+    GitHubV4 is a class that implements the client for the GitHub API v4.
+
+    Examples
+    --------
+    >>> from experiments.github import get_github_token
+    >>> from experiments.github import GitHubV4
+    >>>
+    >>> gh = GitHubV4(token=get_github_token())
+    >>> res = gh.get_user("Hiroya-W")
+    >>> print(res.json())
+    """
+
     def __init__(self, token: str):
         super().__init__()
         self.__token = token

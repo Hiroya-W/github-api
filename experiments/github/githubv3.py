@@ -8,6 +8,16 @@ from requests.models import Response
 class GitHubV3(DefaultHttpClient):
     """
     GitHubV3 is a class that implements the client for the GitHub API v3.
+
+    Examples
+    --------
+    >>> from experiments.github import get_github_token
+    >>> from experiments.github import GitHubV3
+    >>>
+    >>> gh = GitHubV3(token=get_github_token())
+    >>> query = '"KEYWORDS HERE" in:file language:c'
+    >>> res = gh.search_code(query, per_page=100, page=10, text_match=True)
+    >>> print(res.json())
     """
 
     def __init__(self, token: str):
