@@ -1,0 +1,16 @@
+version: "3.2"
+services:
+  main:
+    build: .
+    image: h-watanabe-python:latest
+    container_name: h-watanabe-python-container
+    user: root
+    volumes:
+      - type: bind
+        source: "."
+        target: "/workspace"
+        consistency: "cached"
+    ports:
+      - "8881:8881"
+    tty: true
+    command: jupyter lab --port=8881 --ip=0.0.0.0 --no-browser --allow-root
