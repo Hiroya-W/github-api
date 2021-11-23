@@ -1,0 +1,10 @@
+.pynb_checkpoints
+.mypy_cache
+.venv
+.vscode
+experiments
+ghq
+Here_Be_Dragons
+repo-lists
+log-*
+*.ipynb

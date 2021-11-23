@@ -155,4 +155,5 @@ dmypy.json
 
 # Outputs of Bash Scripts
 ghq/*
+Here_Be_Dragons/*
 response.json
