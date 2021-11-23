@@ -2,7 +2,8 @@ version: "3.2"
 services:
   main:
     build: .
-    container_name: h-watanabe-python
+    image: h-watanabe-python:latest
+    container_name: h-watanabe-python-container
     user: root
     volumes:
       - type: bind
