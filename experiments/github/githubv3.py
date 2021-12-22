@@ -72,6 +72,32 @@ class GitHubV3(DefaultHttpClient):
 
         return self.get(self.__rest_url + ENDPOINT, params=params, headers=headers)
 
+    def get_contents(self, owner: str, repo: str, path: str, ref: str) -> Response:
+        """
+        Gets the contents of a file.
+
+        Parameters
+        ----------
+        owner: str
+            The owner of the repository.
+        repo: str
+            The name of the repository.
+        path: str
+            The path to the file.
+        ref: str
+            The reference to get the contents of.
+
+        Returns
+        -------
+        Response
+            The response from the GitHub API.
+        """
+        ENDPOINT = f"/repos/{owner}/{repo}/contents/{path}"
+        headers = self.__rest_headers
+        params = {"ref": ref}
+
+        return self.get(self.__rest_url + ENDPOINT, params=params, headers=headers)
+
 
 def _search_code_query_builder(
     query: str,
