@@ -1,11 +1,16 @@
 import time
-from typing import Any, Callable
+from typing import Any, Callable, List
 
 from requests.models import Response
 
+DEFAULT_STATUS_CODE = [200]
+
 
 def retry_requests(
-    func: Callable[..., Response], sleep_time: int = 60, logger: Any = None
+    func: Callable[..., Response],
+    sleep_time: int = 60,
+    status_code: List[int] = DEFAULT_STATUS_CODE,
+    logger: Any = None,
 ) -> Callable[..., Response]:
     """
     Retry requests.
@@ -42,7 +47,7 @@ def retry_requests(
     def wrapper(*args: Any, **kwargs: Any) -> Response:
         while True:
             res = func(*args, **kwargs)
-            if res.status_code == 200:
+            if res.status_code in status_code:
                 return res
 
             if logger is not None:
