@@ -21,6 +21,10 @@ def retry_requests(
         Function to be decorated.
     sleep_time : int
         Sleep time in seconds.
+    status_code : List[int], optional, default: [200]
+        Status codes to be considered as successful.
+    logger : Any, optional, default: None
+        Logger object.
 
     Returns
     -------
