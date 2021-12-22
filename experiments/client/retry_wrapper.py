@@ -44,18 +44,22 @@ def retry_requests(
     >>> print(res.json())
     """
 
+    def logwarn(msg: str) -> None:
+        if logger is not None:
+            logger.warning(msg)
+        else:
+            print(msg)
+
     def wrapper(*args: Any, **kwargs: Any) -> Response:
         while True:
             res = func(*args, **kwargs)
             if res.status_code in status_code:
                 return res
+            elif res.status_code == 404:
+                logwarn(f"{res.status_code} error. Skipping. {res.url}")
+                return res
 
-            if logger is not None:
-                logger.warning(
-                    f"{res.status_code} error. Retry after {sleep_time} sec."
-                )
-            else:
-                print(f"{res.status_code} error. Retry after {sleep_time} sec.")
+            logwarn(f"{res.status_code} error. Retry after {sleep_time} sec.")
             time.sleep(sleep_time)
 
     return wrapper
