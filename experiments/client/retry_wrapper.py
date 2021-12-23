@@ -64,6 +64,7 @@ def retry_requests(
                 return res
 
             logwarn(f"{res.status_code} error. Retry after {sleep_time} sec.")
+            logwarn(f"{res.headers}")
             time.sleep(sleep_time)
 
     return wrapper
