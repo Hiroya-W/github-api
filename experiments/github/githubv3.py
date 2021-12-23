@@ -1,11 +1,11 @@
 import urllib.parse
 from typing import Optional
 
-from experiments.client import DefaultHttpClient
+from experiments.client import NoSessionHttpClient
 from requests.models import Response
 
 
-class GitHubV3(DefaultHttpClient):
+class GitHubV3(NoSessionHttpClient):
     """
     GitHubV3 is a class that implements the client for the GitHub API v3.
 

@@ -148,3 +148,42 @@ class CustomHttpClient(HttpClient):
         Post a request to the server.
         """
         return self.client.post(url, data=data, json=json, **kwargs)
+
+
+class NoSessionHttpClient(HttpClient):
+    """
+    NoSessionHttpClient is a class that implements the HttpClient protocol.
+    """
+
+    def __init__(self) -> None:
+        """
+        Initialize the DefaultHttpClient.
+        """
+        retry_strategy = Retry(
+            total=3, status_forcelist=[500, 502, 503, 504], backoff_factor=1
+        )
+        adapter = HTTPAdapter(max_retries=retry_strategy)
+        http = Session()
+        http.mount("http://", adapter)
+        http.mount("https://", adapter)
+        self.client = http
+
+    def get(
+        self, url: str, params: Optional[Any] = None, **kwargs: Optional[Any]
+    ) -> Response:
+        """
+        Get a response from the server.
+        """
+        return self.client.get(url, params=params, **kwargs)
+
+    def post(
+        self,
+        url: str,
+        data: Optional[Any] = None,
+        json: Optional[Any] = None,
+        **kwargs: Optional[Any],
+    ) -> Response:
+        """
+        Post a request to the server.
+        """
+        return self.client.post(url, data=data, json=json, **kwargs)
