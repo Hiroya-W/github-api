@@ -3,13 +3,13 @@ from typing import Any, Callable, List
 
 from requests.models import Response
 
-DEFAULT_STATUS_CODE = [200]
+DEFAULT_RETRY_STATUS_CODE: List[int] = []
 
 
 def retry_requests(
     func: Callable[..., Response],
     sleep_time: int = 60,
-    status_code: List[int] = DEFAULT_STATUS_CODE,
+    status_code: List[int] = DEFAULT_RETRY_STATUS_CODE,
     logger: Any = None,
 ) -> Callable[..., Response]:
     """
@@ -21,8 +21,8 @@ def retry_requests(
         Function to be decorated.
     sleep_time : int
         Sleep time in seconds.
-    status_code : List[int], optional, default: [200]
-        Status codes to be considered as successful.
+    status_code : List[int], optional, default: []
+        List of status codes to be retried.
     logger : Any, optional, default: None
         Logger object.
 
@@ -57,10 +57,14 @@ def retry_requests(
     def wrapper(*args: Any, **kwargs: Any) -> Response:
         while True:
             res = func(*args, **kwargs)
-            if res.status_code in status_code:
-                return res
-            elif res.status_code == 404:
-                logwarn(f"{res.status_code} error. Skipping. {res.url}")
+            if res.status_code not in status_code:
+                if res.status_code != 200:
+                    logwarn(
+                        f"Request failed with status code {res.status_code}. Skip retry."
+                    )
+                    logwarn(f"{res.url}")
+                    logwarn(f"{res.headers}")
+
                 return res
 
             logwarn(f"{res.status_code} error. Retry after {sleep_time} sec.")
