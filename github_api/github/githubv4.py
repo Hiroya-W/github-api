@@ -1,4 +1,4 @@
-from experiments.client import DefaultHttpClient
+from github_api.client import DefaultHttpClient
 from requests.models import Response
 
 
