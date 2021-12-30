@@ -1,6 +1,6 @@
 from typing import Any, Optional, Protocol
 
-from experiments.client.session import SessionCore
+from github_api.client.session import SessionCore
 from requests import Session
 from requests.adapters import HTTPAdapter
 from requests.models import Response

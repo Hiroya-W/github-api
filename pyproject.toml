@@ -1,6 +1,6 @@
 [tool.poetry]
-name = "experiments"
-version = "1.0.0"
+name = "github_api"
+version = "0.1.0"
 description = ""
 authors = ["Hiroya-W <hyuyukun@gmail.com>"]
 license = "MIT"
